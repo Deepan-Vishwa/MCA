@@ -32,10 +32,10 @@
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+                <div class="sidebar-brand-icon">
+                    <i class="fas fa-fire-alt"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">FCMS</div>
             </a>
 
             <!-- Divider -->
@@ -331,8 +331,48 @@
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body">
-                                    <div class="chart-pie pt-4 pb-2">
-                                        <canvas id="myPieChart"></canvas>
+                                    <div class=" pt-4 pb-2">
+                                        <form>
+                                            <div class="form-row">
+                                              <div class="form-group col-md-6">
+                                                <label for="inputEmail4">Height cm</label>
+                                                <input type="number" class="form-control" id="inputEmail4">
+                                              </div>
+                                              <div class="form-group col-md-6">
+                                                <label for="inputEmail4">Weight kg</label>
+                                                <input type="number" class="form-control" id="inputEmail4">
+                                              </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-4">
+                                                  <label for="inputEmail4">Waist cm</label>
+                                                  <input type="number" class="form-control" id="inputEmail4">
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                  <label for="inputEmail4">Hip cm</label>
+                                                  <input type="number" class="form-control" id="inputEmail4">
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label for="inputEmail4">Neck cm</label>
+                                                    <input type="number" class="form-control" id="inputEmail4">
+                                                  </div>
+                                              </div>
+                                            
+                                            <div class="form-row">
+                                              
+                                              <div class="form-group col-md-12">
+                                                <label for="inputState">Cheat Meal</label>
+                                                <select id="inputState" class="form-control">
+                                                  <option selected>No</option>
+                                                  <option>Yes</option>
+                                                </select>
+                                              </div>
+                                              
+                                            </div>
+                                            
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                          </form>   
+                                        
                                     </div>
                                     
                                 </div>
@@ -460,19 +500,16 @@
                             <!-- Illustrations -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Illustrations</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">What are the necessary measurements?</h6>
                                 </div>
                                 <div class="card-body">
-                                    <div class="text-center">
-                                        <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
-                                            src="img/undraw_posting_photo.svg" alt="...">
-                                    </div>
-                                    <p>Add some quality, svg illustrations to your project courtesy of <a
-                                            target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a
-                                        constantly updated collection of beautiful svg images that you can use
-                                        completely free and without attribution!</p>
-                                    <a target="_blank" rel="nofollow" href="https://undraw.co/">Browse Illustrations on
-                                        unDraw &rarr;</a>
+                                    <p>You'll only need a measuring tape. Then, start taking measurements:</p>
+                                    <ol>
+                                        <li><strong>Height</strong> - make sure you stand up straight and barefoot.</li>
+                                        <li><strong>Neck</strong> - the circumference should be measured just underneath the larynx (Adam's apple).</li>
+                                        <li><strong>Waist</strong> - should be measured horizontally, around the narrowest part of the abdomen for women and at the at the navel level for men.</li>
+                                        <li><strong>Hips</strong> - should be measured at the widest part of the buttocks or hip.</li>
+                                        </ol>
                                 </div>
                             </div>
 

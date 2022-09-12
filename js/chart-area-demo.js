@@ -32,27 +32,27 @@ var ctx = document.getElementById("myAreaChart");
 var myLineChart = new Chart(ctx, {
   type: 'line',
   data: {
-      labels: ['j', 'f', 'm', 'a', 'm', 'j', 'jl'],
+      labels: ['25 jun', '25 jun', '25 jun', '25 jun', '25 jun', '25 jun', '25 jun','25 jun', '25 jun', '25 jun', '25 jun', '25 jun', '25 jun', '25 jun'],
       datasets: [
           {
-          label: 'My First Dataset',
-          data: [65, 59, 80, 81, 56, 55, 40],
+          label: 'Weight',
+          data: [65, 59, 80, 81, 56, 55, 40,65, 59, 80, 81, 56, 55, 40],
           fill: false,
-          borderColor: 'rgb(75, 192, 192)',
+          borderColor: 'rgb(48, 141, 0)',
           
       },
       {
-          label: 'My second Dataset',
-          data: [15, 29, 30, 41, 26, 15,20],
+          label: 'Fat %',
+          data: [15, 29, 30, 41, 26, 15,20,15, 29, 30, 41, 26, 15,20],
           fill: false,
-          borderColor: 'rgb(75, 192, 192)',
+          borderColor: 'rgb(255, 0, 0)',
           
       },
       {
-          label: 'My third Dataset',
-          data: [25, 19, 40, 21, 36, 25,30],
+          label: 'Muscle Mass',
+          data: [25, 19, 40, 21, 36, 25,30,25, 19, 40, 21, 36, 25,30],
           fill: false,
-          borderColor: 'rgb(75, 192, 192)',
+          borderColor: 'rgb(0, 0, 255 )',
           
       }
 
