@@ -27,30 +27,68 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   return s.join(dec);
 }
 
+var chart_data = function () {
+  var temp = null;
+  $.ajax({  
+      url: "chart_data.php",
+      type: "POST",
+      async: false,
+
+      success: function (dataResult) {
+          //console.log(dataResult);
+          temp = JSON.parse(dataResult); 
+      }
+
+  })
+  return temp;
+
+}();
+
+
+// console.log(chart_data);
+var dates=[];
+var fat=[];
+var weight =[];
+var muscle =[]; 
+chart_data.forEach(element => {
+
+  dates.push(element.date_lable);
+  fat.push(element.fat);
+  weight.push(element.weight);
+  muscle.push(element.muscle);
+ 
+  
+});
+console.log(dates);
+
+//var lb = ['25 jun', '25 jun', '25 jun', '25 jun', '25 jun', '25 jun', '25 jun','25 jun', '25 jun', '25 jun', '25 jun', '25 jun', '25 jun', '25 jun'];
+
+
+
 // Area Chart Example
 var ctx = document.getElementById("myAreaChart");
 var myLineChart = new Chart(ctx, {
   type: 'line',
   data: {
-      labels: ['25 jun', '25 jun', '25 jun', '25 jun', '25 jun', '25 jun', '25 jun','25 jun', '25 jun', '25 jun', '25 jun', '25 jun', '25 jun', '25 jun'],
+      labels: dates,
       datasets: [
           {
           label: 'Weight',
-          data: [65, 59, 80, 81, 56, 55, 40,65, 59, 80, 81, 56, 55, 40],
+          data: weight,
           fill: false,
           borderColor: 'rgb(48, 141, 0)',
           
       },
       {
           label: 'Fat %',
-          data: [15, 29, 30, 41, 26, 15,20,15, 29, 30, 41, 26, 15,20],
+          data: fat,
           fill: false,
           borderColor: 'rgb(255, 0, 0)',
           
       },
       {
           label: 'Muscle Mass',
-          data: [25, 19, 40, 21, 36, 25,30,25, 19, 40, 21, 36, 25,30],
+          data: muscle,
           fill: false,
           borderColor: 'rgb(0, 0, 255 )',
           
