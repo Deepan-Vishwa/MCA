@@ -10,10 +10,11 @@ if (!isset($_SESSION["clientid"])) {
 }
 
 
-$query = "SELECT `weight`,`waist`,`hip`,`neck`,`cheat_meal`,`fat`,`muscle`,DATE_FORMAT(entry_date,'%D %b %y') as d FROM `checkin` WHERE client_id=" . $_SESSION["clientid"];
-$result = mysqli_query($conn, $query);
+$p_query = "SELECT * FROM paymet_info WHERE client_id=" . $_SESSION["clientid"];
+$p_result = mysqli_query($conn, $p_query);
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +35,6 @@ $result = mysqli_query($conn, $query);
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
 
 </head>
 
@@ -58,8 +58,8 @@ $result = mysqli_query($conn, $query);
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
-                <a class="nav-link" href="main.php">
+            <li class="nav-item active">
+                <a class="nav-link" href="main.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -83,7 +83,7 @@ $result = mysqli_query($conn, $query);
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Workout Chart</span>
                 </a>
-                <a class="nav-link active" href="checkins.php">
+                <a class="nav-link" href="checkins.php">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Check In's</span>
                 </a>
@@ -91,7 +91,6 @@ $result = mysqli_query($conn, $query);
                     <i class="fas fa-fw fa-cog"></i>
                     <span>payment</span>
                 </a>
-
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
@@ -161,86 +160,89 @@ $result = mysqli_query($conn, $query);
 
 
 
-                        <div class="topbar-divider d-none d-sm-block"></div>
+                        
 
                         <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Deepan Vishwa </span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
-                        </li>
+                        
 
                     </ul>
 
                 </nav>
                 <!-- End of Topbar -->
 
-                <!-- Begin Page Content -->
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Your Previous Checkin's</h1>
+                        <h1 class="h3 mb-0 text-gray-800">payment</h1>
 
                     </div>
 
+                    <!-- Content Row -->
+                    <div class="row">
+
+                        <!-- Earnings (Monthly) Card Example -->
+                        <div class="col-xl-6 col-md-12 mb-4">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Pay</h6>
+                                </div>
+                                <div class="card-body">
+
+                                    <form>
+                                        <label for="inputPassword4" class="form-label">Subscription</label>
+                                        <select class="custom-select" name="payment" id="payment">
+
+                                            <option value="1">1 month - Rs 2000</option>
+                                            <option value="3">3 month - Rs 6000</option>
+                                            <option value="6">6 month - Rs 10000 </option>
+                                            <option value="12">12 month - Rs 13000</option>
+                                        </select>
+
+
+                                        <button type="button" id="pay" class="btn btn-primary mt-3">pay</button>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
 
 
 
-                    <!-- DataTales Example -->
+                    </div>
+
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Checkin's</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Payment History</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Date</th>
-                                            <th>Weight</th>
-                                            <th>Waist</th>
-                                            <th>Hip</th>
-                                            <th>Neck</th>
-                                            <th>Cheat Meal</th>
-                                            <th>Fat %</th>
-                                            <th>Muscle</th>
+                                            <th>Date Of payment</th>
+                                            <th>Subscription Type</th>
+                                            <th>Due Date</th>
+
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Date</th>
-                                            <th>Weight</th>
-                                            <th>Waist</th>
-                                            <th>Hip</th>
-                                            <th>Neck</th>
-                                            <th>Cheat Meal</th>
-                                            <th>Fat %</th>
-                                            <th>Muscle</th>
+                                            <th>Date Of payment</th>
+                                            <th>Subscription Type</th>
+                                            <th>Due Date</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
+
                                         <?php
-                                        while ($row = mysqli_fetch_assoc($result)) {
+                                        while ($row = mysqli_fetch_assoc($p_result)) {
                                         ?>
                                             <tr>
-                                                <td><?php echo  $row["d"]; ?></td>
-                                                <td><?php echo  $row["weight"]; ?></td>
-                                                <td><?php echo  $row["waist"]; ?></td>
-                                                <td><?php echo  $row["hip"]; ?></td>
-                                                <td><?php echo  $row["neck"]; ?></td>
-                                                <td><?php echo  $row["cheat_meal"]; ?></td>
-                                                <td><?php echo  $row["fat"]; ?></td>
-                                                <td><?php echo  $row["muscle"]; ?></td>
+                                                <td><?php echo  $row["date"]; ?></td>
+                                                <td><?php echo  $row["sub_type"]; ?></td>
+                                                <td><?php echo  $row["due"]; ?></td>
+
                                             </tr>
 
 
@@ -255,21 +257,17 @@ $result = mysqli_query($conn, $query);
 
 
 
+
+
+
+
                 </div>
                 <!-- /.container-fluid -->
 
             </div>
             <!-- End of Main Content -->
 
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
+
 
         </div>
         <!-- End of Content Wrapper -->
@@ -295,30 +293,28 @@ $result = mysqli_query($conn, $query);
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="logout.php">Logout</a>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 
+
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
-    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+    <!-- Page level plugins -->
+   
 
-    <script>
-        $(document).ready(function() {
-            $('#dataTable').DataTable();
-        });
-    </script>
+    <script src="./js/main.js"></script>
+    <!-- <script src="js/demo/chart-pie-demo.js"></script> -->
 
 </body>
 

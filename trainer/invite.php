@@ -4,16 +4,13 @@ session_start();
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
 
-if (!isset($_SESSION["clientid"])) {
+if (!isset($_SESSION["trainerid"])) {
     header('Location: index.html');
     exit();
 }
 
-
-$query = "SELECT `weight`,`waist`,`hip`,`neck`,`cheat_meal`,`fat`,`muscle`,DATE_FORMAT(entry_date,'%D %b %y') as d FROM `checkin` WHERE client_id=" . $_SESSION["clientid"];
-$result = mysqli_query($conn, $query);
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +31,6 @@ $result = mysqli_query($conn, $query);
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
 
 </head>
 
@@ -58,7 +54,7 @@ $result = mysqli_query($conn, $query);
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
+            <li class="nav-item ">
                 <a class="nav-link" href="main.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
@@ -71,25 +67,21 @@ $result = mysqli_query($conn, $query);
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="profile.php">
-                    <i class="fas fa-fw fa-cog"></i>
+                <a class="nav-link active" href="profile.php">
+                    <i class="fas fa-user-circle"></i>
                     <span>Profile</span>
                 </a>
-                <a class="nav-link" href="dietchart.php">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Diet Chart</span>
+                <a class="nav-link" href="invite.php">
+                    <i class="fas fa-utensils"></i>
+                    <span>Invite Client</span>
                 </a>
-                <a class="nav-link" href="workoutchart.php">
-                    <i class="fas fa-fw fa-cog"></i>
+                <a class="nav-link" href="workoutchart.html">
+                    <i class="fas fa-dumbbell"></i>
                     <span>Workout Chart</span>
                 </a>
-                <a class="nav-link active" href="checkins.php">
-                    <i class="fas fa-fw fa-cog"></i>
+                <a class="nav-link" href="checkins.php">
+                    <i class="fas fa-calendar-check"></i>
                     <span>Check In's</span>
-                </a>
-                <a class="nav-link" href="payment.php">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>payment</span>
                 </a>
 
             </li>
@@ -189,67 +181,48 @@ $result = mysqli_query($conn, $query);
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Your Previous Checkin's</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Invite Client</h1>
 
                     </div>
 
+                    <!-- Content Row -->
+                    <div class="row">
 
+                        <!-- Earnings (Monthly) Card Example -->
+                        <div class="col-xl-6 col-md-12 mb-4">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Invite Client</h6>
+                                </div>
+                                <div class="card-body">
 
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Email address</label>
+                                            <input type="email" class="form-control" id="email_invite" >
+                                            
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Name</label>
+                                            <input type="text" class="form-control" id="name_invite" >
+                                            <input type="text" class="form-control" value="<?php echo $_SESSION["trainerid"] ?>" id="trainer_id" hidden>
+                                            
+                                        </div>
+                                       
+                                        <button type="button" id="invite_mail" class="btn btn-primary">Invite</button>
+                                    </form>
 
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Checkin's</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Weight</th>
-                                            <th>Waist</th>
-                                            <th>Hip</th>
-                                            <th>Neck</th>
-                                            <th>Cheat Meal</th>
-                                            <th>Fat %</th>
-                                            <th>Muscle</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Weight</th>
-                                            <th>Waist</th>
-                                            <th>Hip</th>
-                                            <th>Neck</th>
-                                            <th>Cheat Meal</th>
-                                            <th>Fat %</th>
-                                            <th>Muscle</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        <?php
-                                        while ($row = mysqli_fetch_assoc($result)) {
-                                        ?>
-                                            <tr>
-                                                <td><?php echo  $row["d"]; ?></td>
-                                                <td><?php echo  $row["weight"]; ?></td>
-                                                <td><?php echo  $row["waist"]; ?></td>
-                                                <td><?php echo  $row["hip"]; ?></td>
-                                                <td><?php echo  $row["neck"]; ?></td>
-                                                <td><?php echo  $row["cheat_meal"]; ?></td>
-                                                <td><?php echo  $row["fat"]; ?></td>
-                                                <td><?php echo  $row["muscle"]; ?></td>
-                                            </tr>
-
-
-                                        <?php } ?>
-                                    </tbody>
-                                </table>
+                                </div>
                             </div>
                         </div>
+
+
+
                     </div>
+
+
+
+
 
 
 
@@ -296,6 +269,7 @@ $result = mysqli_query($conn, $query);
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <a class="btn btn-primary" href="login.html">Logout</a>
+                    
                 </div>
             </div>
         </div>
@@ -311,13 +285,30 @@ $result = mysqli_query($conn, $query);
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
-    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+    <!-- Page level plugins -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+
+
+
+    <!-- Page level custom scripts -->
+    <script src="./js/chart-area-demo.js"></script>
+    <!-- <script src="js/demo/chart-pie-demo.js"></script> -->
 
     <script>
-        $(document).ready(function() {
-            $('#dataTable').DataTable();
-        });
+
+$('#invite_mail').on('click', function (event) {
+      event.preventDefault();
+    
+    var email = $("#email_invite").val().trim();
+    var name = $("#name_invite").val().trim();
+    var trainer =  $("#trainer_id").val().trim();
+    var invite_link = "http://localhost/MCA/register_form.php?trainer="+trainer+"%26email_id="+email+"";
+    console.log(invite_link);
+    var subject = 'Online Fitness Training Program Registration';
+    var emailBody = "Dear "+name+"!%0D%0A%0D%0AWe are excited to invite you to our online fitness training program! This program is designed to help you get in shape and achieve your fitness goals.%0D%0A%0D%0ATo get started, simply click on the link below and register for the program. Once you have registered, you will have access to all of the program's features, including:%0D%0A%0D%0A- A personalized Dietplan%0D%0A- A variety of workout planned by your trainer%0D%0A- Progress Analytics%0D%0A%0D%0AWe believe that anyone can achieve their fitness goals with the right support, and we are committed to providing you with the resources you need to succeed. So whether you are looking to lose weight, build muscle, or just get in better shape, we hope you will join us on this journey.%0D%0A%0D%0AClick here to register: "+invite_link+"%0D%0A%0D%0AWe look forward to seeing you in the program!";
+    window.location = 'mailto:' + email + '?subject=' + subject + '&body=' +   emailBody;
+  });
     </script>
 
 </body>

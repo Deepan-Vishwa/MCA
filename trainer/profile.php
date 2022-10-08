@@ -4,16 +4,19 @@ session_start();
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
 
-if (!isset($_SESSION["clientid"])) {
+if (!isset($_SESSION["trainerid"])) {
     header('Location: index.html');
     exit();
 }
 
 
-$query = "SELECT `weight`,`waist`,`hip`,`neck`,`cheat_meal`,`fat`,`muscle`,DATE_FORMAT(entry_date,'%D %b %y') as d FROM `checkin` WHERE client_id=" . $_SESSION["clientid"];
-$result = mysqli_query($conn, $query);
+$query = "select * from trainer WHERE id =".$_SESSION["trainerid"];
+// $query = "select * from client where id=".$_SESSION["trainerid"];
+$result = mysqli_query($conn, $query); 
 
+$row = mysqli_fetch_assoc($result);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -30,11 +33,12 @@ $result = mysqli_query($conn, $query);
 
     <!-- Custom fonts for this template-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
 
 </head>
 
@@ -58,7 +62,7 @@ $result = mysqli_query($conn, $query);
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
+            <li class="nav-item ">
                 <a class="nav-link" href="main.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
@@ -67,43 +71,39 @@ $result = mysqli_query($conn, $query);
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-
+            
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="profile.php">
-                    <i class="fas fa-fw fa-cog"></i>
+                <a class="nav-link active" href="profile.php">
+                  <i class="fas fa-user-circle"></i>
                     <span>Profile</span>
                 </a>
-                <a class="nav-link" href="dietchart.php">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Diet Chart</span>
+                <a class="nav-link" href="invite.php">
+                  <i class="fas fa-utensils"></i>
+                    <span>Invite Client</span>
                 </a>
-                <a class="nav-link" href="workoutchart.php">
-                    <i class="fas fa-fw fa-cog"></i>
+                <a class="nav-link" href="workoutchart.html">
+                  <i class="fas fa-dumbbell"></i>
                     <span>Workout Chart</span>
                 </a>
-                <a class="nav-link active" href="checkins.php">
-                    <i class="fas fa-fw fa-cog"></i>
+                <a class="nav-link" href="checkins.php">
+                  <i class="fas fa-calendar-check"></i>
                     <span>Check In's</span>
-                </a>
-                <a class="nav-link" href="payment.php">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>payment</span>
                 </a>
 
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
+            
 
+            
 
+            
 
+            
 
-
-
-
-
-
+            
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -113,7 +113,7 @@ $result = mysqli_query($conn, $query);
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
 
-
+            
 
         </ul>
         <!-- End of Sidebar -->
@@ -132,21 +132,25 @@ $result = mysqli_query($conn, $query);
                         <i class="fa fa-bars"></i>
                     </button>
 
-
+                  
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                         <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-search fa-fw"></i>
                             </a>
                             <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
                                 <form class="form-inline mr-auto w-100 navbar-search">
                                     <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
                                         <div class="input-group-append">
                                             <button class="btn btn-primary" type="button">
                                                 <i class="fas fa-search fa-sm"></i>
@@ -157,21 +161,24 @@ $result = mysqli_query($conn, $query);
                             </div>
                         </li>
 
+                        
 
-
-
+                        
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Deepan Vishwa </span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                <img class="img-profile rounded-circle"
+                                    src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
@@ -189,71 +196,61 @@ $result = mysqli_query($conn, $query);
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Your Previous Checkin's</h1>
-
+                        <h1 class="h3 mb-0 text-gray-800">Your Profile</h1>
+                      
                     </div>
 
+                    <!-- Content Row -->
+                    <div class="row">
 
-
-
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Checkin's</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Weight</th>
-                                            <th>Waist</th>
-                                            <th>Hip</th>
-                                            <th>Neck</th>
-                                            <th>Cheat Meal</th>
-                                            <th>Fat %</th>
-                                            <th>Muscle</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Weight</th>
-                                            <th>Waist</th>
-                                            <th>Hip</th>
-                                            <th>Neck</th>
-                                            <th>Cheat Meal</th>
-                                            <th>Fat %</th>
-                                            <th>Muscle</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        <?php
-                                        while ($row = mysqli_fetch_assoc($result)) {
-                                        ?>
-                                            <tr>
-                                                <td><?php echo  $row["d"]; ?></td>
-                                                <td><?php echo  $row["weight"]; ?></td>
-                                                <td><?php echo  $row["waist"]; ?></td>
-                                                <td><?php echo  $row["hip"]; ?></td>
-                                                <td><?php echo  $row["neck"]; ?></td>
-                                                <td><?php echo  $row["cheat_meal"]; ?></td>
-                                                <td><?php echo  $row["fat"]; ?></td>
-                                                <td><?php echo  $row["muscle"]; ?></td>
-                                            </tr>
-
-
-                                        <?php } ?>
-                                    </tbody>
-                                </table>
+                        <!-- Earnings (Monthly) Card Example -->
+                        <div class="col-xl-6 col-md-12 mb-4">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">General Details</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                    <table class="table table-borderless">
+                                        
+                                        <tbody>
+                                          <tr>
+                                            
+                                            <td>Name</td>
+                                            <td><?php echo  $row["name"]; ?></td>
+                                           
+                                          </tr>
+        
+                                          <tr>
+                                            
+                                            <td>Email</td>
+                                            <td><?php echo  $row["email"]; ?></td>
+                                           
+                                          </tr>
+                                          <tr>
+                                            
+                                            <td>Contact</td>
+                                            <td><?php echo  $row["contact"]; ?></td>
+                                           
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
+                       
+
                     </div>
 
+                    
+
+                   
 
 
 
+                    
 
                 </div>
                 <!-- /.container-fluid -->
@@ -283,7 +280,8 @@ $result = mysqli_query($conn, $query);
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -303,7 +301,7 @@ $result = mysqli_query($conn, $query);
 
     <!-- Bootstrap core JavaScript-->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
@@ -311,14 +309,15 @@ $result = mysqli_query($conn, $query);
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
-    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+    <!-- Page level plugins -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    
 
-    <script>
-        $(document).ready(function() {
-            $('#dataTable').DataTable();
-        });
-    </script>
+
+
+    <!-- Page level custom scripts -->
+    <script src="./js/chart-area-demo.js"></script>
+    <!-- <script src="js/demo/chart-pie-demo.js"></script> -->
 
 </body>
 

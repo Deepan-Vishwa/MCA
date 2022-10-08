@@ -4,16 +4,17 @@ session_start();
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
 
-if (!isset($_SESSION["clientid"])) {
+if (!isset($_SESSION["trainerid"])) {
     header('Location: index.html');
     exit();
 }
+date_default_timezone_set('Asia/Kolkata');
 
+$today_date =  date('Y-m-d');
 
-$query = "SELECT `weight`,`waist`,`hip`,`neck`,`cheat_meal`,`fat`,`muscle`,DATE_FORMAT(entry_date,'%D %b %y') as d FROM `checkin` WHERE client_id=" . $_SESSION["clientid"];
-$result = mysqli_query($conn, $query);
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +35,6 @@ $result = mysqli_query($conn, $query);
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
 
 </head>
 
@@ -58,8 +58,8 @@ $result = mysqli_query($conn, $query);
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
-                <a class="nav-link" href="main.php">
+            <li class="nav-item active">
+                <a class="nav-link" href="main.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -75,23 +75,18 @@ $result = mysqli_query($conn, $query);
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Profile</span>
                 </a>
-                <a class="nav-link" href="dietchart.php">
+                <a class="nav-link" href="invite.php">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Diet Chart</span>
+                    <span>Invite Client</span>
                 </a>
-                <a class="nav-link" href="workoutchart.php">
+                <a class="nav-link" href="view_clients.php">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Workout Chart</span>
+                    <span>View Clients</span>
                 </a>
-                <a class="nav-link active" href="checkins.php">
+                <a class="nav-link" href="checkins.php">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Check In's</span>
                 </a>
-                <a class="nav-link" href="payment.php">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>payment</span>
-                </a>
-
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
@@ -189,71 +184,74 @@ $result = mysqli_query($conn, $query);
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Your Previous Checkin's</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Todays Checkins</h1>
 
                     </div>
 
+                    <?php
 
 
 
-                    <!-- DataTales Example -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Checkin's</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Weight</th>
-                                            <th>Waist</th>
-                                            <th>Hip</th>
-                                            <th>Neck</th>
-                                            <th>Cheat Meal</th>
-                                            <th>Fat %</th>
-                                            <th>Muscle</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Weight</th>
-                                            <th>Waist</th>
-                                            <th>Hip</th>
-                                            <th>Neck</th>
-                                            <th>Cheat Meal</th>
-                                            <th>Fat %</th>
-                                            <th>Muscle</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        <?php
-                                        while ($row = mysqli_fetch_assoc($result)) {
-                                        ?>
-                                            <tr>
-                                                <td><?php echo  $row["d"]; ?></td>
-                                                <td><?php echo  $row["weight"]; ?></td>
-                                                <td><?php echo  $row["waist"]; ?></td>
-                                                <td><?php echo  $row["hip"]; ?></td>
-                                                <td><?php echo  $row["neck"]; ?></td>
-                                                <td><?php echo  $row["cheat_meal"]; ?></td>
-                                                <td><?php echo  $row["fat"]; ?></td>
-                                                <td><?php echo  $row["muscle"]; ?></td>
-                                            </tr>
+                    $get_query = "SELECT DISTINCT `client_id`,client.name FROM `checkin` INNER JOIN client on checkin.client_id = client.id WHERE checkin.entry_date = '" . $today_date . "';";
+                    $get_result = mysqli_query($conn, $get_query);
+                    
 
 
-                                        <?php } ?>
-                                    </tbody>
-                                </table>
+
+                    ?>
+
+
+
+
+
+
+                    <!-- Content Row -->
+                    <div class="row">
+
+                        <!-- Content Column -->
+                        <div class="col-lg-12 mb-4">
+
+
+
+
+                            <!-- Color System -->
+                            <div class="row">
+                                <?php
+                                while ($get_row = mysqli_fetch_assoc($get_result)) {
+
+
+                                ?>
+                                    <div class="col-lg-4 client_card">
+                                        <a href="client_report.php?client=<?php echo  $get_row["client_id"]; ?>" class="card bg-danger text-white shadow text-decoration-none">
+                                            <div class="card-body stretched-link">
+
+
+
+                                            <?php echo  $get_row["name"]; ?>
+
+
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                <?php } ?>
+
+
+
+
+
+
+
+
+
+
+
                             </div>
+
                         </div>
+
+
                     </div>
-
-
-
-
 
                 </div>
                 <!-- /.container-fluid -->
@@ -295,30 +293,34 @@ $result = mysqli_query($conn, $query);
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="logout.php">Logout</a>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 
+
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
-    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+    <!-- Page level plugins -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
-    <script>
-        $(document).ready(function() {
-            $('#dataTable').DataTable();
-        });
-    </script>
+
+
+
+    <!-- Page level custom scripts -->
+    <script src="./js/chart-area-demo.js"></script>
+
+    <script src="./js/main.js"></script>
+    <!-- <script src="js/demo/chart-pie-demo.js"></script> -->
 
 </body>
 

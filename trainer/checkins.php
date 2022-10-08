@@ -4,13 +4,13 @@ session_start();
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
 
-if (!isset($_SESSION["clientid"])) {
+if (!isset($_SESSION["trainerid"])) {
     header('Location: index.html');
     exit();
 }
 
 
-$query = "SELECT `weight`,`waist`,`hip`,`neck`,`cheat_meal`,`fat`,`muscle`,DATE_FORMAT(entry_date,'%D %b %y') as d FROM `checkin` WHERE client_id=" . $_SESSION["clientid"];
+$query = "SELECT `weight`,`waist`,`hip`,`neck`,`cheat_meal`,`fat`,`muscle`,DATE_FORMAT(entry_date,'%D %b %y') as d FROM `checkin` WHERE client_id=" . $_SESSION["trainerid"];
 $result = mysqli_query($conn, $query);
 
 ?>
@@ -75,21 +75,17 @@ $result = mysqli_query($conn, $query);
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Profile</span>
                 </a>
-                <a class="nav-link" href="dietchart.php">
+                <a class="nav-link" href="invite.php">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Diet Chart</span>
+                    <span>Invite Client</span>
                 </a>
-                <a class="nav-link" href="workoutchart.php">
+                <a class="nav-link" href="view_clients.php">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Workout Chart</span>
+                    <span>View Clients</span>
                 </a>
                 <a class="nav-link active" href="checkins.php">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Check In's</span>
-                </a>
-                <a class="nav-link" href="payment.php">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>payment</span>
                 </a>
 
             </li>
