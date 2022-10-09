@@ -30,11 +30,12 @@ $today_date =  date('Y-m-d');
     <title>Dashboard</title>
 
     <!-- Custom fonts for this template-->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 
 </head>
 
@@ -47,7 +48,7 @@ $today_date =  date('Y-m-d');
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="main.php">
                 <div class="sidebar-brand-icon">
                     <i class="fas fa-fire-alt"></i>
                 </div>
@@ -59,7 +60,7 @@ $today_date =  date('Y-m-d');
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="main.html">
+                <a class="nav-link" href="main.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -72,20 +73,16 @@ $today_date =  date('Y-m-d');
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link" href="profile.php">
-                    <i class="fas fa-fw fa-cog"></i>
+                    <i class="fa-solid fa-address-card"></i>
                     <span>Profile</span>
                 </a>
                 <a class="nav-link" href="invite.php">
-                    <i class="fas fa-fw fa-cog"></i>
+                <i class="fa-solid fa-envelope"></i>
                     <span>Invite Client</span>
                 </a>
                 <a class="nav-link" href="view_clients.php">
-                    <i class="fas fa-fw fa-cog"></i>
+                <i class="fa-solid fa-flag"></i>
                     <span>View Clients</span>
-                </a>
-                <a class="nav-link" href="checkins.php">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Check In's</span>
                 </a>
             </li>
 
@@ -161,8 +158,8 @@ $today_date =  date('Y-m-d');
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Deepan Vishwa </span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                            </a>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -194,7 +191,7 @@ $today_date =  date('Y-m-d');
 
                     $get_query = "SELECT DISTINCT `client_id`,`status`,client.name FROM `checkin` INNER JOIN client on checkin.client_id = client.id WHERE checkin.entry_date = '" . $today_date . "' AND status = 'pending' order by status desc;";
                     $get_result = mysqli_query($conn, $get_query);
-                    
+
 
 
 
@@ -223,24 +220,22 @@ $today_date =  date('Y-m-d');
                                 ?>
                                     <div class="col-lg-4 client_card">
 
-                                    <?php 
+                                        <?php
 
-                                    $color = "bg-danger";
+                                        $color = "bg-danger";
 
-                                    if($get_row["status"] == 'done'){
-                                        $color = "bg-success";
+                                        if ($get_row["status"] == 'done') {
+                                            $color = "bg-success";
+                                        }
 
 
-                                    }
-                                    
-                                    
-                                    ?>
+                                        ?>
                                         <a data-cid="<?php echo  $get_row["client_id"]; ?>" href="client_report.php?client=<?php echo  $get_row["client_id"]; ?>" class="card <?php echo  $color; ?> text-white shadow text-decoration-none client_card">
                                             <div class="card-body stretched-link">
 
-                                        
 
-                                            <?php echo  $get_row["name"]; ?>
+
+                                                <?php echo  $get_row["name"]; ?>
 
 
                                             </div>
@@ -273,13 +268,7 @@ $today_date =  date('Y-m-d');
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
-                    </div>
-                </div>
-            </footer>
+
             <!-- End of Footer -->
 
         </div>

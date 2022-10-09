@@ -49,7 +49,7 @@ $today_date =  date('Y-m-d');
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="main.php">
                 <div class="sidebar-brand-icon">
                     <i class="fas fa-fire-alt"></i>
                 </div>
@@ -61,7 +61,7 @@ $today_date =  date('Y-m-d');
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="main.html">
+                <a class="nav-link" href="main.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -73,24 +73,23 @@ $today_date =  date('Y-m-d');
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="profile.php">
-                    <i class="fas fa-fw fa-cog"></i>
+                <a class="nav-link " href="profile.php">
+                    <i class="fa-solid fa-address-card"></i>
                     <span>Profile</span>
                 </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="invite.php">
-                    <i class="fas fa-fw fa-cog"></i>
+                <i class="fa-solid fa-envelope"></i>
                     <span>Invite Client</span>
                 </a>
+                </li>
+                <li class="nav-item">
                 <a class="nav-link" href="view_clients.php">
-                    <i class="fas fa-fw fa-cog"></i>
+                <i class="fa-solid fa-flag"></i>
                     <span>View Clients</span>
                 </a>
-                <a class="nav-link" href="checkins.php">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Check In's</span>
-                </a>
-            </li>
-
+                </li>
             <!-- Nav Item - Utilities Collapse Menu -->
 
 
@@ -163,8 +162,8 @@ $today_date =  date('Y-m-d');
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Deepan Vishwa </span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                            </a>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -186,7 +185,7 @@ $today_date =  date('Y-m-d');
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Client Report</h1>
 
                     </div>
 
@@ -197,7 +196,7 @@ $today_date =  date('Y-m-d');
                     $query = "SELECT 
                     (SELECT weight FROM checkin WHERE client_id = " . $_GET['client'] . " ORDER BY id  LIMIT 1) as initial,
                     (SELECT weight FROM checkin WHERE client_id = " . $_GET['client'] . " ORDER BY id DESC LIMIT 1) as curr,
-                    (SELECT goal FROM client WHERE id = " . $_SESSION["clientid"] . " ) as goal,
+                    (SELECT goal FROM client WHERE id = " .  $_GET['client'] . " ) as goal,
 
                     FORMAT(
                         (SELECT weight FROM checkin WHERE client_id = " . $_GET['client'] . " ORDER BY id LIMIT 1)
@@ -233,9 +232,7 @@ $today_date =  date('Y-m-d');
                                                 Subscription</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $row['days'] ?> days left</div>
                                         </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -251,9 +248,7 @@ $today_date =  date('Y-m-d');
                                                 Initial Weight</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $row['initial'] ?> kg</div>
                                         </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -261,7 +256,7 @@ $today_date =  date('Y-m-d');
 
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-2 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card border-left-info shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
@@ -269,41 +264,34 @@ $today_date =  date('Y-m-d');
                                                 Current Weight</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $row['curr'] ?> kg</div>
                                         </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-xl-2 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card border-left-danger shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <?php 
-                                             $diff = 0;
-                                             $cap = "Weight Gained";
-                                             if($row['goal'] == 'Fat Loss'){
+                                            <?php
+                                            $diff = 0;
+                                            $cap = "Weight Gained";
+                                            if ($row['goal'] == 'Fat Loss') {
                                                 $cap = "Lost Weight";
                                                 $diff = $row['initial'] - $row['curr'];
-
-                                             }
-                                             else{
+                                            } else {
 
                                                 $diff =  $row['curr'] - $row['initial'];
+                                            }
 
-                                             }
-                                            
                                             ?>
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                            <?php echo $cap ?></div>
+                                                <?php echo $cap ?></div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $diff ?> kg</div>
                                         </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -314,7 +302,7 @@ $today_date =  date('Y-m-d');
 
                         <!-- Pending Requests Card Example -->
                         <div class="col-xl-2 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
+                            <div class="card border-left-primary shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
@@ -323,9 +311,7 @@ $today_date =  date('Y-m-d');
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $row['fat'] ?> %</div>
                                         </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -341,9 +327,7 @@ $today_date =  date('Y-m-d');
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $row['muscle'] ?> Kg</div>
                                         </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                        </div>
+                                       
                                     </div>
                                 </div>
                             </div>
@@ -433,10 +417,10 @@ $today_date =  date('Y-m-d');
 
 
                                                         <th>Total Diet Calories</th>
-                                                        <td><?php 
-                                                        
-                                                        $tdc_s = $c_row['tdc'];
-                                                        echo  $tdc_s ?></td>
+                                                        <td><?php
+
+                                                            $tdc_s = $c_row['tdc'];
+                                                            echo  $tdc_s ?></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -472,7 +456,7 @@ $today_date =  date('Y-m-d');
                                                     <?php
 
 
-                                                    $t_query = "SELECT bmr,tdee FROM checkin WHERE client_id = ".$_GET['client']." ORDER BY id DESC LIMIT 1";
+                                                    $t_query = "SELECT bmr,tdee FROM checkin WHERE client_id = " . $_GET['client'] . " ORDER BY id DESC LIMIT 1";
                                                     $t_result = mysqli_query($conn, $t_query);
                                                     $t_row = mysqli_fetch_assoc($t_result);
                                                     ?>
@@ -515,14 +499,14 @@ $today_date =  date('Y-m-d');
                                                         <th>Due Date</th>
                                                         <td><?php echo $c_row['due'] ?></td>
                                                     </tr>
-                                                    
+
                                                     <tr bgcolor="#4e73df" class="text-white">
 
 
                                                         <th>TDEE</th>
                                                         <td><?php
-                                                         $tdee_s = $t_row['tdee'];
-                                                        echo $tdee_s; ?></td>
+                                                            $tdee_s = $t_row['tdee'];
+                                                            echo $tdee_s; ?></td>
                                                     </tr>
 
 
@@ -574,24 +558,23 @@ $today_date =  date('Y-m-d');
                                     <div class=" pt-4 pb-2">
                                         <div>
 
-                                        <?php 
-                                        $sugg = "Going Good";
-                                        $col = "bg-success";
+                                            <?php
+                                            $sugg = "Going Good";
+                                            $col = "bg-success";
 
-                                        if( $tdc_s > $tdee_s){
+                                            if ($tdc_s > $tdee_s) {
 
-                                            $sugg = "Need To Change Diet Chart";
-                                            $col = "bg-danger";
-
-                                        }
-                                        
+                                                $sugg = "Need To Change Diet Chart";
+                                                $col = "bg-danger";
+                                            }
 
 
-                                        
-                                        ?>
+
+
+                                            ?>
                                             <div class="card <?php echo $col; ?> text-white shadow">
                                                 <div class="card-body text-center">
-                                                   <?php echo $sugg; ?>
+                                                    <?php echo $sugg; ?>
 
                                                 </div>
                                             </div>
@@ -617,31 +600,31 @@ $today_date =  date('Y-m-d');
 
                         <div class="row">
 
-                        <div class="col-xl-6 col-md-12 mb-4">
+                            <div class="col-xl-6 col-md-12 mb-4">
                                 <div class="card shadow mb-4">
                                     <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Breakfast</h6>
+                                        <h6 class="m-0 font-weight-bold text-primary">TDC</h6>
                                     </div>
                                     <div class="card-body">
 
-                                    <form>
-                
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Total Diet Calories</label>
-                                            <input type="text" class="form-control" id="tdc" >
-                                            
-                                            
-                                        </div>
-                                       
-                                        <button type="button" id="tdc_button" data-clid="<?php echo $_GET['client']?>" class="btn btn-primary">Enter</button>
-                                    </form>
-                                        
-                                            
+                                        <form>
+
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Total Diet Calories</label>
+                                                <input type="text" class="form-control" id="tdc">
+
+
+                                            </div>
+
+                                            <button type="button" id="tdc_button" data-clid="<?php echo $_GET['client'] ?>" class="btn btn-primary">Enter</button>
+                                        </form>
+
+
                                     </div>
                                 </div>
                             </div>
 
-                            </div>
+                        </div>
 
 
                         <?php
@@ -1505,13 +1488,7 @@ $today_date =  date('Y-m-d');
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
-                    </div>
-                </div>
-            </footer>
+
             <!-- End of Footer -->
 
         </div>
