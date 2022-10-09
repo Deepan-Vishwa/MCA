@@ -101,9 +101,10 @@ $(document).ready(function () {
 
   
             $("#pay").click(function() {
-                console.log("object");
+               
 
-                var sub = $("#payment").val().trim();
+                var sub = $("#payment").find(":selected").val().trim();
+                console.log(sub);
 
 
                 $.ajax({

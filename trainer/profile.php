@@ -29,7 +29,7 @@ $row = mysqli_fetch_assoc($result);
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Dashboard</title>
+    <title>Profile</title>
 
     <!-- Custom fonts for this template-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" rel="stylesheet" type="text/css">

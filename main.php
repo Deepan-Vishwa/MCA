@@ -47,7 +47,7 @@ $today_date =  date('Y-m-d');
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="main.php">
                 <div class="sidebar-brand-icon">
                     <i class="fas fa-fire-alt"></i>
                 </div>
@@ -59,7 +59,7 @@ $today_date =  date('Y-m-d');
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="main.html">
+                <a class="nav-link" href="main.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -70,27 +70,37 @@ $today_date =  date('Y-m-d');
 
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link" href="profile.php">
-                    <i class="fas fa-fw fa-cog"></i>
+            <li class="nav-item ">
+                <a class="nav-link " href="profile.php">
+                    <i class="fas fa-user-circle"></i>
                     <span>Profile</span>
                 </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="dietchart.php">
-                    <i class="fas fa-fw fa-cog"></i>
+                    <i class="fas fa-utensils"></i>
                     <span>Diet Chart</span>
                 </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="workoutchart.php">
-                    <i class="fas fa-fw fa-cog"></i>
+                    <i class="fas fa-dumbbell"></i>
                     <span>Workout Chart</span>
                 </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="checkins.php">
-                    <i class="fas fa-fw fa-cog"></i>
+                    <i class="fas fa-calendar-check"></i>
                     <span>Check In's</span>
                 </a>
+            </li>
+            <li class="nav-item">
+
                 <a class="nav-link" href="payment.php">
-                    <i class="fas fa-fw fa-cog"></i>
+                <i class="fa-solid fa-cart-shopping"></i>
                     <span>payment</span>
                 </a>
+
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
@@ -157,13 +167,26 @@ $today_date =  date('Y-m-d');
                         </li>
 
 
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                            </a>
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
 
 
 
-                        
 
                         <!-- Nav Item - User Information -->
-                        
+
 
                     </ul>
 
@@ -195,14 +218,14 @@ $today_date =  date('Y-m-d');
                         
                     (SELECT muscle FROM checkin WHERE client_id = " . $_SESSION["clientid"] . " ORDER BY id  DESC LIMIT  1) as muscle,
                     (SELECT fat FROM checkin WHERE client_id = " . $_SESSION["clientid"] . " ORDER BY id DESC LIMIT  1) as fat,
-                    (SELECT DATEDIFF(DATE_ADD(paymet_info.date, INTERVAL paymet_info.sub_type MONTH),'".$today_date."') FROM `checkin` INNER JOIN paymet_info on paymet_info.client_id = checkin.client_id  WHERE checkin.client_id = " . $_SESSION["clientid"] . " ORDER BY paymet_info.id DESC LIMIT 1) as days
+                    (SELECT DATEDIFF(paymet_info.due,'" . $today_date . "') FROM `checkin` INNER JOIN paymet_info on paymet_info.client_id = checkin.client_id  WHERE checkin.client_id = " . $_SESSION["clientid"] . " ORDER BY paymet_info.id DESC LIMIT 1) as days
                     
                     
                         ";
                     $result = mysqli_query($conn, $query);
                     $row = mysqli_fetch_assoc($result);
 
-                    $cleint_qu = "SELECT gender,activity_level,dob from client where id = ".$_SESSION["clientid"] ."";
+                    $cleint_qu = "SELECT gender,activity_level,dob from client where id = " . $_SESSION["clientid"] . "";
                     $result_2 = mysqli_query($conn, $cleint_qu);
                     $row_2 = mysqli_fetch_assoc($result_2);
 
@@ -223,9 +246,7 @@ $today_date =  date('Y-m-d');
                                                 Subscription</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $row['days'] ?> days left</div>
                                         </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -241,9 +262,7 @@ $today_date =  date('Y-m-d');
                                                 Initial Weight</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $row['initial'] ?> kg</div>
                                         </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -259,9 +278,7 @@ $today_date =  date('Y-m-d');
                                                 Current Weight</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $row['curr'] ?> kg</div>
                                         </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -272,28 +289,23 @@ $today_date =  date('Y-m-d');
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <?php 
-                                             $diff = 0;
-                                             $cap = "Weight Gained";
-                                             if($row['goal'] == 'Fat Loss'){
+                                            <?php
+                                            $diff = 0;
+                                            $cap = "Weight Gained";
+                                            if ($row['goal'] == 'Fat Loss') {
                                                 $cap = "Lost Weight";
                                                 $diff = $row['initial'] - $row['curr'];
-
-                                             }
-                                             else{
+                                            } else {
 
                                                 $diff =  $row['curr'] - $row['initial'];
+                                            }
 
-                                             }
-                                            
                                             ?>
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                            <?php echo $cap ?></div>
+                                                <?php echo $cap ?></div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $diff ?> kg</div>
                                         </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -313,9 +325,7 @@ $today_date =  date('Y-m-d');
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $row['fat'] ?> %</div>
                                         </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -331,9 +341,7 @@ $today_date =  date('Y-m-d');
                                             </div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $row['muscle'] ?> Kg</div>
                                         </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -436,16 +444,17 @@ $today_date =  date('Y-m-d');
                             <!-- Illustrations -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Client Details</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">What are the necessary measurements?</h6>
                                 </div>
                                 <div class="card-body">
-                                    <p>Client Details</p>
+                                    <p>You'll only need a measuring tape. Then, start taking measurements:</p>
                                     <ol>
                                         <li><strong>Height</strong> - make sure you stand up straight and barefoot.</li>
                                         <li><strong>Neck</strong> - the circumference should be measured just underneath the larynx (Adam's apple).</li>
                                         <li><strong>Waist</strong> - should be measured horizontally, around the narrowest part of the abdomen for women and at the at the navel level for men.</li>
                                         <li><strong>Hips</strong> - should be measured at the widest part of the buttocks or hip.</li>
                                     </ol>
+
                                 </div>
                             </div>
 
@@ -453,6 +462,67 @@ $today_date =  date('Y-m-d');
 
 
                         </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-lg-4 mb-4">
+
+                            <!-- Illustrations -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">How to measure Waist Circumference</h6>
+                                </div>
+                                <div class="card-body">
+
+                                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/b-BXpE0itSY">
+                                    </iframe>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-4 mb-4">
+
+                            <!-- Illustrations -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Neck Circumference</h6>
+                                </div>
+                                <div class="card-body">
+                                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/c62-UsM7GhQ">
+                                    </iframe>
+
+                                </div>
+                            </div>
+
+                            <!-- Approach -->
+
+
+                        </div>
+
+                        <div class="col-lg-4 mb-4">
+
+                            <!-- Illustrations -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">How to Find Your Waist to Hip Ratio</h6>
+                                </div>
+                                <div class="card-body">
+
+                                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/jyL8UfGZMJE">
+                                    </iframe>
+                                </div>
+                            </div>
+
+                            <!-- Approach -->
+
+
+                        </div>
+
+
                     </div>
 
                 </div>

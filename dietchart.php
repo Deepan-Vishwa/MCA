@@ -23,7 +23,7 @@ if (!isset($_SESSION["clientid"])) {
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Dashboard</title>
+  <title>Diet Chart</title>
 
   <!-- Custom fonts for this template-->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" rel="stylesheet" type="text/css">
@@ -43,7 +43,7 @@ if (!isset($_SESSION["clientid"])) {
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="main.php">
         <div class="sidebar-brand-icon">
           <i class="fas fa-fire-alt"></i>
         </div>
@@ -66,29 +66,38 @@ if (!isset($_SESSION["clientid"])) {
 
 
       <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link" href="profile.php">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Profile</span>
-        </a>
-        <a class="nav-link active" href="dietchart.php">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Diet Chart</span>
-        </a>
-        <a class="nav-link" href="workoutchart.php">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Workout Chart</span>
-        </a>
-        <a class="nav-link" href="checkins.php">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Check In's</span>
-        </a>
-        <a class="nav-link" href="payment.php">
-                    <i class="fas fa-fw fa-cog"></i>
+      <li class="nav-item ">
+                <a class="nav-link " href="profile.php">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Profile</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="dietchart.php">
+                    <i class="fas fa-utensils"></i>
+                    <span>Diet Chart</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="workoutchart.php">
+                    <i class="fas fa-dumbbell"></i>
+                    <span>Workout Chart</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="checkins.php">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Check In's</span>
+                </a>
+            </li>
+            <li class="nav-item">
+
+                <a class="nav-link" href="payment.php">
+                <i class="fa-solid fa-cart-shopping"></i>
                     <span>payment</span>
                 </a>
 
-      </li>
+            </li>
 
       <!-- Nav Item - Utilities Collapse Menu -->
 
@@ -162,8 +171,7 @@ if (!isset($_SESSION["clientid"])) {
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Deepan Vishwa </span>
-                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+              <i class="fa-solid fa-right-from-bracket"></i>
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -480,7 +488,7 @@ if (!isset($_SESSION["clientid"])) {
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <a class="btn btn-primary" href="logout.php">Logout</a>
         </div>
       </div>
     </div>

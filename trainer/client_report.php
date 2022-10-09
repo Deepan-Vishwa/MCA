@@ -26,7 +26,7 @@ $today_date =  date('Y-m-d');
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Dashboard</title>
+    <title>Client Report</title>
 
     <!-- Custom fonts for this template-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" rel="stylesheet" type="text/css">
@@ -206,7 +206,7 @@ $today_date =  date('Y-m-d');
                         
                     (SELECT muscle FROM checkin WHERE client_id = " . $_GET['client'] . " ORDER BY id  DESC LIMIT  1) as muscle,
                     (SELECT fat FROM checkin WHERE client_id = " . $_GET['client'] . " ORDER BY id DESC LIMIT  1) as fat,
-                    (SELECT DATEDIFF(DATE_ADD(paymet_info.date, INTERVAL 3 MONTH),paymet_info.date) FROM `checkin` INNER JOIN paymet_info on paymet_info.client_id = checkin.client_id  WHERE checkin.client_id = " . $_GET['client'] . " ORDER BY paymet_info.id LIMIT 1) as days
+                    (SELECT DATEDIFF(paymet_info.due,paymet_info.date) FROM `checkin` INNER JOIN paymet_info on paymet_info.client_id = checkin.client_id  WHERE checkin.client_id = " . $_GET['client'] . " ORDER BY paymet_info.id LIMIT 1) as days
                     
                     
                         ";

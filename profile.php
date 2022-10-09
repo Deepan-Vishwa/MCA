@@ -10,9 +10,9 @@ if (!isset($_SESSION["clientid"])) {
 }
 
 
-$query = "select * from client inner join paymet_info on client.id = paymet_info.client_id WHERE client.id =".$_SESSION["clientid"]." ORDER BY paymet_info.id DESC LIMIT 1";
+$query = "select client.*,paymet_info.*,trainer.name as t_name,trainer.email as t_email,trainer.contact as t_contact from client inner join paymet_info on client.id = paymet_info.client_id inner join trainer on trainer.id = client.trainer_id WHERE client.id =" . $_SESSION["clientid"] . " ORDER BY paymet_info.id DESC LIMIT 1";
 // $query = "select * from client where id=".$_SESSION["clientid"];
-$result = mysqli_query($conn, $query); 
+$result = mysqli_query($conn, $query);
 
 $row = mysqli_fetch_assoc($result);
 ?>
@@ -29,13 +29,11 @@ $row = mysqli_fetch_assoc($result);
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Dashboard</title>
+    <title>Profile</title>
 
     <!-- Custom fonts for this template-->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.css" rel="stylesheet">
@@ -51,7 +49,7 @@ $row = mysqli_fetch_assoc($result);
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="main.php">
                 <div class="sidebar-brand-icon">
                     <i class="fas fa-fire-alt"></i>
                 </div>
@@ -71,44 +69,52 @@ $row = mysqli_fetch_assoc($result);
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-            
+
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link active" href="profile.php">
-                  <i class="fas fa-user-circle"></i>
+            <li class="nav-item active">
+                <a class="nav-link " href="profile.php">
+                    <i class="fas fa-user-circle"></i>
                     <span>Profile</span>
                 </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="dietchart.php">
-                  <i class="fas fa-utensils"></i>
+                    <i class="fas fa-utensils"></i>
                     <span>Diet Chart</span>
                 </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="workoutchart.php">
-                  <i class="fas fa-dumbbell"></i>
+                    <i class="fas fa-dumbbell"></i>
                     <span>Workout Chart</span>
                 </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="checkins.php">
-                  <i class="fas fa-calendar-check"></i>
+                    <i class="fas fa-calendar-check"></i>
                     <span>Check In's</span>
                 </a>
+            </li>
+            <li class="nav-item">
 
                 <a class="nav-link" href="payment.php">
-                    <i class="fas fa-fw fa-cog"></i>
+                <i class="fa-solid fa-cart-shopping"></i>
                     <span>payment</span>
                 </a>
 
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
-            
 
-            
 
-            
 
-            
 
-            
+
+
+
+
+
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -118,7 +124,7 @@ $row = mysqli_fetch_assoc($result);
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
 
-            
+
 
         </ul>
         <!-- End of Sidebar -->
@@ -137,7 +143,7 @@ $row = mysqli_fetch_assoc($result);
                         <i class="fa fa-bars"></i>
                     </button>
 
-                  
+
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -148,8 +154,8 @@ $row = mysqli_fetch_assoc($result);
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-search fa-fw"></i>
                             </a> -->
-                            <!-- Dropdown - Messages -->
-                            <!-- <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                        <!-- Dropdown - Messages -->
+                        <!-- <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
                                 aria-labelledby="searchDropdown">
                                 <form class="form-inline mr-auto w-100 navbar-search">
                                     <div class="input-group">
@@ -166,24 +172,20 @@ $row = mysqli_fetch_assoc($result);
                             </div>
                         </li> -->
 
-                        
 
-                        
+
+
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Deepan Vishwa </span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa-solid fa-right-from-bracket"></i>
                             </a>
                             <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
@@ -202,7 +204,7 @@ $row = mysqli_fetch_assoc($result);
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Your Profile</h1>
-                      
+
                     </div>
 
                     <!-- Content Row -->
@@ -216,35 +218,71 @@ $row = mysqli_fetch_assoc($result);
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                    <table class="table table-borderless">
-                                        
-                                        <tbody>
-                                          <tr>
-                                            
-                                            <td>Name</td>
-                                            <td><?php echo  $row["name"]; ?></td>
-                                           
-                                          </tr>
-                                          <tr>
-                                           
-                                            <td>DOB</td>
-                                            <td><?php echo  $row["dob"]; ?></td>
-                                           
-                                          </tr>
-                                          <tr>
-                                            
-                                            <td>Email</td>
-                                            <td><?php echo  $row["email"]; ?></td>
-                                           
-                                          </tr>
-                                          <tr>
-                                            
-                                            <td>Contact</td>
-                                            <td><?php echo  $row["contact"]; ?></td>
-                                           
-                                          </tr>
-                                        </tbody>
-                                      </table>
+                                        <table class="table table-borderless">
+
+                                            <tbody>
+                                                <tr>
+
+                                                    <td>Name</td>
+                                                    <td><?php echo  $row["name"]; ?></td>
+
+                                                </tr>
+                                                <tr>
+
+                                                    <td>DOB</td>
+                                                    <td><?php echo  $row["dob"]; ?></td>
+
+                                                </tr>
+                                                <tr>
+
+                                                    <td>Email</td>
+                                                    <td><?php echo  $row["email"]; ?></td>
+
+                                                </tr>
+                                                <tr>
+
+                                                    <td>Contact</td>
+                                                    <td><?php echo  $row["contact"]; ?></td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-6 col-md-12 mb-4">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Trainer Details</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-borderless">
+
+                                            <tbody>
+                                                <tr>
+
+                                                    <td>Name</td>
+                                                    <td><?php echo  $row["t_name"]; ?></td>
+
+                                                </tr>
+                                                <tr>
+
+                                                    <td>Email</td>
+                                                    <td><?php echo  $row["t_email"]; ?></td>
+
+                                                </tr>
+                                                <tr>
+
+                                                    <td>Contact</td>
+                                                    <td><?php echo  $row["t_contact"]; ?></td>
+
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -260,35 +298,35 @@ $row = mysqli_fetch_assoc($result);
                                         <table class="table table-borderless">
 
                                             <tbody>
-                                              <tr>
-                                               
-                                                <td>Due Date</td>
-                                                <td><?php echo  $row["due"]; ?></td>
-                                               
-                                              </tr>
-                                              <tr>
-                                                
-                                                <td>Last Payment</td>
-                                                <td><?php echo  $row["date"]; ?></td>
-                                               
-                                              </tr>
-                                              
+                                                <tr>
+
+                                                    <td>Due Date</td>
+                                                    <td><?php echo  $row["due"]; ?></td>
+
+                                                </tr>
+                                                <tr>
+
+                                                    <td>Last Payment</td>
+                                                    <td><?php echo  $row["date"]; ?></td>
+
+                                                </tr>
+
                                             </tbody>
-                                          </table>
-                                        </div>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                     </div>
 
-                    
-
-                   
 
 
 
-                    
+
+
+
+
 
                 </div>
                 <!-- /.container-fluid -->
@@ -318,8 +356,7 @@ $row = mysqli_fetch_assoc($result);
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -331,7 +368,7 @@ $row = mysqli_fetch_assoc($result);
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="logout.php">Logout</a>
                 </div>
             </div>
         </div>
@@ -339,7 +376,7 @@ $row = mysqli_fetch_assoc($result);
 
     <!-- Bootstrap core JavaScript-->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
@@ -349,7 +386,7 @@ $row = mysqli_fetch_assoc($result);
 
     <!-- Page level plugins -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    
+
 
 
 
