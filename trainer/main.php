@@ -192,7 +192,7 @@ $today_date =  date('Y-m-d');
 
 
 
-                    $get_query = "SELECT DISTINCT `client_id`,client.name FROM `checkin` INNER JOIN client on checkin.client_id = client.id WHERE checkin.entry_date = '" . $today_date . "';";
+                    $get_query = "SELECT DISTINCT `client_id`,`status`,client.name FROM `checkin` INNER JOIN client on checkin.client_id = client.id WHERE checkin.entry_date = '" . $today_date . "' AND status = 'pending' order by status desc;";
                     $get_result = mysqli_query($conn, $get_query);
                     
 
@@ -222,10 +222,23 @@ $today_date =  date('Y-m-d');
 
                                 ?>
                                     <div class="col-lg-4 client_card">
-                                        <a href="client_report.php?client=<?php echo  $get_row["client_id"]; ?>" class="card bg-danger text-white shadow text-decoration-none">
+
+                                    <?php 
+
+                                    $color = "bg-danger";
+
+                                    if($get_row["status"] == 'done'){
+                                        $color = "bg-success";
+
+
+                                    }
+                                    
+                                    
+                                    ?>
+                                        <a data-cid="<?php echo  $get_row["client_id"]; ?>" href="client_report.php?client=<?php echo  $get_row["client_id"]; ?>" class="card <?php echo  $color; ?> text-white shadow text-decoration-none client_card">
                                             <div class="card-body stretched-link">
 
-
+                                        
 
                                             <?php echo  $get_row["name"]; ?>
 

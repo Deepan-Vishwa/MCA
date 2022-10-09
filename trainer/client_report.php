@@ -197,6 +197,8 @@ $today_date =  date('Y-m-d');
                     $query = "SELECT 
                     (SELECT weight FROM checkin WHERE client_id = " . $_GET['client'] . " ORDER BY id  LIMIT 1) as initial,
                     (SELECT weight FROM checkin WHERE client_id = " . $_GET['client'] . " ORDER BY id DESC LIMIT 1) as curr,
+                    (SELECT goal FROM client WHERE id = " . $_SESSION["clientid"] . " ) as goal,
+
                     FORMAT(
                         (SELECT weight FROM checkin WHERE client_id = " . $_GET['client'] . " ORDER BY id LIMIT 1)
                         -
@@ -280,9 +282,24 @@ $today_date =  date('Y-m-d');
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
+                                            <?php 
+                                             $diff = 0;
+                                             $cap = "Weight Gained";
+                                             if($row['goal'] == 'Fat Loss'){
+                                                $cap = "Lost Weight";
+                                                $diff = $row['initial'] - $row['curr'];
+
+                                             }
+                                             else{
+
+                                                $diff =  $row['curr'] - $row['initial'];
+
+                                             }
+                                            
+                                            ?>
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Lost Weight</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $row['lost'] ?> kg</div>
+                                            <?php echo $cap ?></div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $diff ?> kg</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -412,6 +429,15 @@ $today_date =  date('Y-m-d');
                                                         <th>Smoking</th>
                                                         <td><?php echo $c_row['smoke'] ?></td>
                                                     </tr>
+                                                    <tr bgcolor="#4e73df" class="text-white">
+
+
+                                                        <th>Total Diet Calories</th>
+                                                        <td><?php 
+                                                        
+                                                        $tdc_s = $c_row['tdc'];
+                                                        echo  $tdc_s ?></td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -494,7 +520,9 @@ $today_date =  date('Y-m-d');
 
 
                                                         <th>TDEE</th>
-                                                        <td><?php echo $t_row['tdee'] ?></td>
+                                                        <td><?php
+                                                         $tdee_s = $t_row['tdee'];
+                                                        echo $tdee_s; ?></td>
                                                     </tr>
 
 
@@ -545,9 +573,25 @@ $today_date =  date('Y-m-d');
                                 <div class="card-body">
                                     <div class=" pt-4 pb-2">
                                         <div>
-                                            <div class="card bg-danger text-white shadow">
+
+                                        <?php 
+                                        $sugg = "Going Good";
+                                        $col = "bg-success";
+
+                                        if( $tdc_s > $tdee_s){
+
+                                            $sugg = "Need To Change Diet Chart";
+                                            $col = "bg-danger";
+
+                                        }
+                                        
+
+
+                                        
+                                        ?>
+                                            <div class="card <?php echo $col; ?> text-white shadow">
                                                 <div class="card-body text-center">
-                                                    Chnage in diet plan required
+                                                   <?php echo $sugg; ?>
 
                                                 </div>
                                             </div>
@@ -570,6 +614,34 @@ $today_date =  date('Y-m-d');
                             <h1 class="h3 mb-0 text-gray-800">Diet Chart</h1>
 
                         </div>
+
+                        <div class="row">
+
+                        <div class="col-xl-6 col-md-12 mb-4">
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary">Breakfast</h6>
+                                    </div>
+                                    <div class="card-body">
+
+                                    <form>
+                
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Total Diet Calories</label>
+                                            <input type="text" class="form-control" id="tdc" >
+                                            
+                                            
+                                        </div>
+                                       
+                                        <button type="button" id="tdc_button" data-clid="<?php echo $_GET['client']?>" class="btn btn-primary">Enter</button>
+                                    </form>
+                                        
+                                            
+                                    </div>
+                                </div>
+                            </div>
+
+                            </div>
 
 
                         <?php

@@ -13,8 +13,8 @@ if($conn->query($query) === TRUE){
     $client_id = $conn->insert_id;
 
     
-    $query2 = "INSERT INTO `checkin`(`client_id`, `height`, `weight`, `waist`, `hip`, `neck`, `cheat_meal`, `fat`, `muscle`, `bmr`, `tdee`, `entry_date`) VALUES 
-                                    (".$client_id.",".$height.",".$weight.",".$waist.",".$hip.",".$neck.",'no',".$bodyfat.",".$leanmass.",".$bmr.",".$tdee.",CURRENT_TIMESTAMP);";
+    $query2 = "INSERT INTO `checkin`(`client_id`, `height`, `weight`, `waist`, `hip`, `neck`, `cheat_meal`, `fat`, `muscle`, `bmr`, `tdee`, `entry_date`,`status`) VALUES 
+                                    (".$client_id.",".$height.",".$weight.",".$waist.",".$hip.",".$neck.",'no',".$bodyfat.",".$leanmass.",".$bmr.",".$tdee.",CURRENT_TIMESTAMP,'pending');";
 
 
 if($conn->query($query2) === TRUE){

@@ -213,6 +213,62 @@ $(document).ready(function () {
     }
   });
 
+  $("#tdc_button").click(function () {
+
+    var tdc = $("#tdc").val().trim();
+    var clid = $(this).data("clid");
+
+    console.log(tdc);
+    console.log(clid);
+    $.ajax({
+      type: "POST",
+      url: "insert_tdc.php",
+      async: false,
+      data:{
+
+        clid:clid,
+        tdc:tdc
+
+      },
+      success: function (data) {
+
+        if(data === "1"){
+          alert("done");
+        }
+        
+      },
+    });
+
+
+
+
+  });
+
+  $(".client_card").click(function () {
+    var i=$(this).data("cid");
+
+if($(this).hasClass( "bg-danger" )){
+
+ 
+    $.ajax({
+      type: "POST",
+      url: "update_status.php",
+      async: false,
+      data:{
+
+        cid:i
+
+      },
+      success: function (data) {
+        
+      },
+    });
+  }
+
+
+
+  });
+
   $("#checkin_submit").click(function () {
     var h = parseInt($("#height").val().trim());
     var w = parseInt($("#weight").val().trim());

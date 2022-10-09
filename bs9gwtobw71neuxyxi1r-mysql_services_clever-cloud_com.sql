@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: bs9gwtobw71neuxyxi1r-mysql.services.clever-cloud.com:3306
--- Generation Time: Oct 08, 2022 at 09:55 AM
+-- Generation Time: Oct 09, 2022 at 05:56 AM
 -- Server version: 8.0.22-13
 -- PHP Version: 7.2.34
 
@@ -43,26 +43,28 @@ CREATE TABLE `checkin` (
   `muscle` float NOT NULL,
   `bmr` int NOT NULL,
   `tdee` int NOT NULL,
-  `entry_date` date NOT NULL
+  `entry_date` date NOT NULL,
+  `status` enum('done','pending') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `checkin`
 --
 
-INSERT INTO `checkin` (`id`, `client_id`, `height`, `weight`, `waist`, `hip`, `neck`, `cheat_meal`, `fat`, `muscle`, `bmr`, `tdee`, `entry_date`) VALUES
-(1, 1, 173, 96.9, 114, 121, 44.5, 'no', 32, 65, 0, 0, '2022-08-04'),
-(2, 1, 173, 93.5, 105, 115, 42, 'no', 28, 67, 0, 0, '2022-09-04'),
-(3, 1, 173, 88.2, 102, 110, 40.5, 'no', 28, 63, 0, 0, '2022-10-04'),
-(4, 1, 173, 85, 89, 95, 40, 'no', 19, 69, 0, 0, '2022-10-06'),
-(5, 1, 173, 79, 87, 90, 35, 'no', 21, 62, 0, 0, '2022-10-06'),
-(6, 1, 173, 75, 85, 90, 37, 'no', 18, 61, 0, 0, '2022-10-06'),
-(7, 1, 173, 82, 90, 98, 41, 'no', 19, 66, 0, 0, '2022-10-06'),
-(8, 1, 173, 89, 97, 99, 35, 'no', 28, 64, 0, 0, '2022-10-06'),
-(9, 1, 173, 79, 97, 100, 35, 'no', 28, 57, 0, 0, '2022-10-06'),
-(16, 6, 163, 69, 89, 95, 40, 'no', 31, 48, 1512, 2079, '2022-10-07'),
-(17, 1, 173, 89, 89, 89, 67, 'no', 11, 79, 1722, 2066, '2022-10-08'),
-(18, 1, 173, 89, 89, 90, 40, 'no', 26, 66, 1722, 2066, '2022-10-08');
+INSERT INTO `checkin` (`id`, `client_id`, `height`, `weight`, `waist`, `hip`, `neck`, `cheat_meal`, `fat`, `muscle`, `bmr`, `tdee`, `entry_date`, `status`) VALUES
+(1, 1, 173, 96.9, 114, 121, 44.5, 'no', 32, 65, 0, 0, '2022-08-04', 'done'),
+(2, 1, 173, 93.5, 105, 115, 42, 'no', 28, 67, 0, 0, '2022-09-04', 'done'),
+(3, 1, 173, 88.2, 102, 110, 40.5, 'no', 28, 63, 0, 0, '2022-10-04', 'done'),
+(4, 1, 173, 85, 89, 95, 40, 'no', 19, 69, 0, 0, '2022-10-06', 'done'),
+(5, 1, 173, 79, 87, 90, 35, 'no', 21, 62, 0, 0, '2022-10-06', 'done'),
+(6, 1, 173, 75, 85, 90, 37, 'no', 18, 61, 0, 0, '2022-10-06', 'done'),
+(7, 1, 173, 82, 90, 98, 41, 'no', 19, 66, 0, 0, '2022-10-06', 'done'),
+(8, 1, 173, 89, 97, 99, 35, 'no', 28, 64, 0, 0, '2022-10-06', 'done'),
+(9, 1, 173, 79, 97, 100, 35, 'no', 28, 57, 0, 0, '2022-10-06', 'done'),
+(16, 6, 163, 69, 89, 95, 40, 'no', 31, 48, 1512, 2079, '2022-10-07', 'done'),
+(22, 1, 173, 89, 89, 89, 45, 'no', 23, 69, 1722, 2066, '2022-10-09', 'done'),
+(23, 1, 173, 89, 89, 89, 40, 'no', 25, 67, 1722, 2066, '2022-10-09', 'done'),
+(24, 6, 160, 68, 68, 68, 30, 'no', 11, 61, 1497, 1796, '2022-10-09', 'done');
 
 -- --------------------------------------------------------
 
@@ -86,16 +88,17 @@ CREATE TABLE `client` (
   `goal` enum('Fat Loss','Weight Gain') NOT NULL,
   `profession` varchar(70) NOT NULL,
   `meal_type` enum('Veg','Non-veg') NOT NULL,
-  `medical` longtext
+  `medical` longtext,
+  `tdc` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `client`
 --
 
-INSERT INTO `client` (`id`, `trainer_id`, `email`, `name`, `contact`, `dob`, `password`, `gender`, `Address`, `alcohol`, `smoke`, `activity_level`, `goal`, `profession`, `meal_type`, `medical`) VALUES
-(1, 1, 'srdeepansr@gmail.com', 'Deepan Vishwa S R', '7550188018', '2001-01-01', '1234567890', 'male', '', 'yes', 'yes', '1.2', 'Fat Loss', '', 'Veg', NULL),
-(6, 1, 'kiruthigait2000@gmail.com', 'Kiruthiga', '0987654321', '2000-12-03', '1234567890', 'female', 'chennai', 'no', 'no', '1.2', 'Fat Loss', 'student', 'Veg', '');
+INSERT INTO `client` (`id`, `trainer_id`, `email`, `name`, `contact`, `dob`, `password`, `gender`, `Address`, `alcohol`, `smoke`, `activity_level`, `goal`, `profession`, `meal_type`, `medical`, `tdc`) VALUES
+(1, 1, 'srdeepansr@gmail.com', 'Deepan Vishwa S R', '7550188018', '2001-01-01', '1234567890', 'male', '', 'yes', 'yes', '1.2', 'Fat Loss', '', 'Veg', NULL, 2000),
+(6, 1, 'kiruthigait2000@gmail.com', 'Kiruthiga', '0987654321', '2000-12-03', '1234567890', 'female', 'chennai', 'no', 'no', '1.2', 'Fat Loss', 'student', 'Veg', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -242,7 +245,7 @@ ALTER TABLE `workout_chart`
 -- AUTO_INCREMENT for table `checkin`
 --
 ALTER TABLE `checkin`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `client`
