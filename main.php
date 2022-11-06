@@ -13,6 +13,7 @@ date_default_timezone_set('Asia/Kolkata');
 
 $today_date =  date('Y-m-d');
 
+
 ?>
 
 
@@ -244,7 +245,26 @@ $today_date =  date('Y-m-d');
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Subscription</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $row['days'] ?> days left</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php
+                                            $d = $row['days']; 
+
+                                            if($d <= 0){
+
+                                              echo  "<script>window.location = 'payment.php'</script>";
+                                                
+
+                                            }
+
+                                            echo $d;
+                                            
+                                            
+
+
+                                            
+                                            
+                                            
+                                            
+                                            ?> days left</div>
                                         </div>
 
                                     </div>

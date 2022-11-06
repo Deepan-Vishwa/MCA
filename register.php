@@ -21,7 +21,7 @@ if($conn->query($query2) === TRUE){
 
     $due = date('Y-m-d', strtotime($to_date. ' + '.$payment.' months'));
 
-    $query3 = "INSERT INTO `paymet_info`(`client_id`, `date`, `sub_type`, `due`) VALUES (".$client_id.",'".$to_date."',".$payment.",'".$due."');";
+    $query3 = "INSERT INTO `paymet_info`(`client_id`, `date`, `sub_type`, `due`) VALUES (".$client_id.",'".$to_date."','".$payment."','".$due."');";
 
     if($conn->query($query3) === TRUE){
 

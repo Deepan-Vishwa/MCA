@@ -218,7 +218,7 @@ $today_date =  date('Y-m-d');
 
 
                                 ?>
-                                    <div class="col-lg-4 client_card">
+                                    <div class="col-lg-4 client_card pt-3">
 
                                         <?php
 

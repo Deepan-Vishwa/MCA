@@ -206,7 +206,7 @@ $today_date =  date('Y-m-d');
                         
                     (SELECT muscle FROM checkin WHERE client_id = " . $_GET['client'] . " ORDER BY id  DESC LIMIT  1) as muscle,
                     (SELECT fat FROM checkin WHERE client_id = " . $_GET['client'] . " ORDER BY id DESC LIMIT  1) as fat,
-                    (SELECT DATEDIFF(paymet_info.due,paymet_info.date) FROM `checkin` INNER JOIN paymet_info on paymet_info.client_id = checkin.client_id  WHERE checkin.client_id = " . $_GET['client'] . " ORDER BY paymet_info.id LIMIT 1) as days
+                    (SELECT DATEDIFF(paymet_info.due,'" . $today_date . "') FROM `checkin` INNER JOIN paymet_info on paymet_info.client_id = checkin.client_id  WHERE checkin.client_id = " . $_SESSION["clientid"] . " ORDER BY paymet_info.id DESC LIMIT 1) as days
                     
                     
                         ";
@@ -230,7 +230,31 @@ $today_date =  date('Y-m-d');
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Subscription</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $row['days'] ?> days left</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php
+                                            $d = $row['days']; 
+
+                                            if($d <= 0){
+
+                                                echo "Subscription Over";
+                                              
+                                                
+
+                                            }
+                                            else{
+                                                echo $d."days left";
+
+                                            }
+
+                                            
+                                            
+                                            
+
+
+                                            
+                                            
+                                            
+                                            
+                                            ?> </div>
                                         </div>
                                         
                                     </div>
