@@ -206,7 +206,7 @@ $today_date =  date('Y-m-d');
                         
                     (SELECT muscle FROM checkin WHERE client_id = " . $_GET['client'] . " ORDER BY id  DESC LIMIT  1) as muscle,
                     (SELECT fat FROM checkin WHERE client_id = " . $_GET['client'] . " ORDER BY id DESC LIMIT  1) as fat,
-                    (SELECT DATEDIFF(paymet_info.due,'" . $today_date . "') FROM `checkin` INNER JOIN paymet_info on paymet_info.client_id = checkin.client_id  WHERE checkin.client_id = " . $_SESSION["clientid"] . " ORDER BY paymet_info.id DESC LIMIT 1) as days
+                    (SELECT DATEDIFF(paymet_info.due,'" . $today_date . "') FROM `checkin` INNER JOIN paymet_info on paymet_info.client_id = checkin.client_id  WHERE checkin.client_id = " . $_GET['client'] . " ORDER BY paymet_info.id DESC LIMIT 1) as days
                     
                     
                         ";
@@ -462,7 +462,8 @@ $today_date =  date('Y-m-d');
                                                     <tr>
 
                                                         <th>Goal</th>
-                                                        <td><?php echo $c_row['goal'] ?></td>
+                                                        <td><?php
+                                                        $goal = $c_row['goal']; echo $goal ?></td>
 
                                                     </tr>
                                                     <tr>
@@ -586,10 +587,16 @@ $today_date =  date('Y-m-d');
                                             $sugg = "Going Good";
                                             $col = "bg-success";
 
-                                            if ($tdc_s > $tdee_s) {
+                                            if ($goal == 'Fat Loss' && $tdc_s > $tdee_s) {
 
                                                 $sugg = "Need To Change Diet Chart";
                                                 $col = "bg-danger";
+                                            }
+                                            else if($goal == 'Weight Gain' && $tdc_s < $tdee_s){
+                                                $sugg = "Need To Change Diet Chart";
+                                                $col = "bg-danger";
+
+
                                             }
 
 
